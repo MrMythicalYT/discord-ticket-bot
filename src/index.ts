@@ -11,6 +11,7 @@ import { inspect } from "util";
 import "dotenv/config";
 import { performance } from "perf_hooks";
 import { readdirSync } from "fs";
+import { createServer } from "http";
 
 interface ComponentFile {
   readonly customId: string;
@@ -114,6 +115,16 @@ client.on(Events.InteractionCreate, (interaction) => {
       .find((component) => component.customId === interaction.customId)
       ?.execute(interaction);
   }
+});
+
+// For uptime
+const server = createServer();
+server.on("request", (_, res) => {
+  res.writeHead(200, "OK", {
+    "Content-Type": "text/plain",
+  });
+  res.write(`Status: ${client.isReady() ? "Offline" : "Online"}`);
+  res.end();
 });
 
 client.login();
