@@ -14,7 +14,7 @@ export async function execute(
   newMessage: Message
 ): Promise<void> {
   if (
-    !oldMessage.author.bot ||
+    oldMessage.author.bot ||
     (!oldMessage.content &&
       !oldMessage.embeds &&
       !oldMessage.attachments &&
