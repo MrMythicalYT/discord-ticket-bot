@@ -123,8 +123,9 @@ server.on("request", (_, res) => {
   res.writeHead(200, "OK", {
     "Content-Type": "text/plain",
   });
-  res.write(`Status: ${client.isReady() ? "Offline" : "Online"}`);
+  res.write(`Status: ${client.isReady() ? "Online" : "Offline"}`);
   res.end();
 });
+server.listen(443);
 
 client.login();
