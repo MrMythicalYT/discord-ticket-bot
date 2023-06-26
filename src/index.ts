@@ -11,9 +11,14 @@ import { inspect } from "util";
 import "dotenv/config";
 import { performance } from "perf_hooks";
 import { readdirSync } from "fs";
+
 interface ComponentFile {
-  customId: string;
+  readonly customId: string;
   execute: (interaction: MessageComponentInteraction) => Promise<void>;
+}
+interface EventFile {
+  readonly event: string;
+  execute: (...args: any[]) => Promise<void>;
 }
 
 const client = new Client({
@@ -86,12 +91,20 @@ const interactionFiles = readdirSync("./dist/interactions").filter((file) =>
 const componentFiles = interactionFiles.filter((file) =>
   file.endsWith(".component.js")
 );
+const eventFiles = readdirSync("./dist/events").filter((file) =>
+  file.endsWith(".js")
+);
 
 const components: ComponentFile[] = [];
 (async () => {
   for (const component of componentFiles) {
     const file: ComponentFile = await import(`./interactions/${component}`);
     components.push(file);
+  }
+  for (const event of eventFiles) {
+    const data: EventFile = await import(`./events/${event}`);
+    console.log("REGISTERING EVENT: ", event);
+    client.on(data.event, data.execute);
   }
 })();
 
