@@ -8,7 +8,7 @@ import {
   InteractionType,
 } from "discord.js";
 import { inspect } from "util";
-if (!process.env.DISCORD_TOKEN) import("dotenv/config");
+import "dotenv/config";
 import { performance } from "perf_hooks";
 import { readdirSync } from "fs";
 interface ComponentFile {
