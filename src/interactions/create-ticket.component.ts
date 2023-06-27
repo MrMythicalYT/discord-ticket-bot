@@ -4,6 +4,7 @@ import {
   ChannelType,
   Colors,
   ComponentType,
+  roleMention,
 } from "discord.js";
 
 export const customId = "create-ticket";
@@ -60,6 +61,9 @@ export async function execute(
     ],
   });
   await thread.members.add(interaction.user.id, "Creator of ticket");
+  await thread.send(
+    `${roleMention("1117526204774367292")} will soon be in contact with you.`
+  );
   await interaction.reply({
     content: `Your ticket has been created! ${thread}`,
     ephemeral: true,
