@@ -1,4 +1,4 @@
-import { ButtonInteraction } from "discord.js";
+import { APIEmbed, ButtonInteraction, ChannelType, Colors } from "discord.js";
 
 export const customId = "close-ticket";
 
@@ -21,4 +21,24 @@ export async function execute(
       ephemeral: true,
     })
   );
+  const channel = interaction.client.channels.cache.get(
+    process.env.LOG_CHANNEL!
+  );
+  if (!channel || channel.type !== ChannelType.GuildText) return;
+  const embeds: APIEmbed[] = [
+    {
+      color: Colors.Red,
+      title: `Ticket closed by ${
+        interaction.user.discriminator !== "0"
+          ? interaction.user.tag
+          : `@${interaction.user.username} (${interaction.user.id})`
+      }`,
+      description: `${interaction.channel} (${interaction.channelId} - ${
+        interaction.channel!.url
+      })`,
+    },
+  ];
+  channel.send({
+    embeds,
+  });
 }

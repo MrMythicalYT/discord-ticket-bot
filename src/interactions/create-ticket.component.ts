@@ -1,4 +1,5 @@
 import {
+  APIEmbed,
   ButtonInteraction,
   ButtonStyle,
   ChannelType,
@@ -61,11 +62,27 @@ export async function execute(
     ],
   });
   await thread.members.add(interaction.user.id, "Creator of ticket");
-  await thread.send(
-    `${roleMention("1117526204774367292")} will soon be in contact with you.`
-  );
+  await thread.send(`${"<modping>"} will soon be in contact with you.`);
   await interaction.reply({
     content: `Your ticket has been created! ${thread}`,
     ephemeral: true,
+  });
+  const channel = interaction.client.channels.cache.get(
+    process.env.LOG_CHANNEL!
+  );
+  if (!channel || channel.type !== ChannelType.GuildText) return;
+  const embeds: APIEmbed[] = [
+    {
+      color: Colors.Red,
+      title: `Ticket created by ${
+        interaction.user.discriminator !== "0"
+          ? interaction.user.tag
+          : `@${interaction.user.username} (${interaction.user.id})`
+      }`,
+      description: `${thread} (${thread.id})`,
+    },
+  ];
+  channel.send({
+    embeds,
   });
 }
