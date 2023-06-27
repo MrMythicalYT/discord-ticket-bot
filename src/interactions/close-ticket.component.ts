@@ -33,9 +33,9 @@ export async function execute(
           ? interaction.user.tag
           : `@${interaction.user.username} (${interaction.user.id})`
       }`,
-      description: `${interaction.channel} (${interaction.channelId} - ${
+      description: `${interaction.channel} (${interaction.channelId} - <${
         interaction.channel!.url
-      })`,
+      }>)`,
     },
   ];
   channel.send({

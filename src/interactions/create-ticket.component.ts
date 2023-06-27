@@ -62,7 +62,9 @@ export async function execute(
     ],
   });
   await thread.members.add(interaction.user.id, "Creator of ticket");
-  await thread.send(`${"<modping>"} will soon be in contact with you.`);
+  await thread.send(
+    `${roleMention("1117526204774367292")} will soon be in contact with you.`
+  );
   await interaction.reply({
     content: `Your ticket has been created! ${thread}`,
     ephemeral: true,
@@ -79,7 +81,7 @@ export async function execute(
           ? interaction.user.tag
           : `@${interaction.user.username} (${interaction.user.id})`
       }`,
-      description: `${thread} (${thread.id})`,
+      description: `${thread} (${thread.id} - <${thread.url}>)`,
     },
   ];
   channel.send({
