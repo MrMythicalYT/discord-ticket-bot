@@ -9,9 +9,10 @@ export async function execute(
     !interaction.memberPermissions.has("ManageThreads") &&
     !interaction.channel?.name.includes(interaction.user.id)
   ) {
-    return void interaction.reply(
-      "You do not have the permissions to do that!"
-    );
+    return void interaction.reply({
+      content: "You do not have the permissions to do that!",
+      ephemeral: true,
+    });
   }
   await interaction.channel?.edit({ archived: true, locked: true }).catch(() =>
     interaction.reply({
