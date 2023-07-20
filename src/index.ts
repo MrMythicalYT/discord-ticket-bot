@@ -27,6 +27,7 @@ const client = new Client({
     GatewayIntentBits.Guilds,
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
+    GatewayIntentBits.GuildMembers,
   ],
 });
 
@@ -40,7 +41,7 @@ client.on(Events.MessageCreate, async (message) => {
     const code = message.content.slice(6).split(/ +/g).join(" ");
     const start = performance.now();
     try {
-      const res = eval(code);
+      const res = await eval(`async () => ${code}`)();
       const end = performance.now();
       let text = inspect(res, false, 3, true);
       if (text.length > 1024) text = Object.prototype.toString.call(res);
