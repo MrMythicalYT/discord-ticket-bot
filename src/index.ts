@@ -6,6 +6,7 @@ import {
   codeBlock,
   MessageComponentInteraction,
   InteractionType,
+  RESTEvents,
 } from "discord.js";
 import { inspect } from "util";
 import "dotenv/config";
@@ -116,6 +117,11 @@ client.on(Events.InteractionCreate, (interaction) => {
       .find((component) => component.customId === interaction.customId)
       ?.execute(interaction);
   }
+});
+
+client.rest.on(RESTEvents.RateLimited, (data) => {
+  console.log("A ratelimit occurred!");
+  console.log(data);
 });
 
 // For uptime
