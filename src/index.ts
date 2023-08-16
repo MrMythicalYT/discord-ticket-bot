@@ -119,10 +119,8 @@ client.on(Events.InteractionCreate, (interaction) => {
   }
 });
 
-client.rest.on(RESTEvents.RateLimited, (data) => {
-  console.log("A ratelimit occurred!");
-  console.log(data);
-});
+client.on(Events.Warn, console.log);
+client.on(Events.Debug, console.log);
 
 // For uptime
 const server = createServer();
