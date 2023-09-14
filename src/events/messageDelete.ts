@@ -17,7 +17,7 @@ export async function execute(message: Message): Promise<void> {
     (!message.content &&
       !message.embeds &&
       !message.attachments &&
-      !message.stickers)
+      !message.stickers) || message.channel.id == '1148057687565811795'
   )
     return;
   const channel = message.client.channels.cache.get(process.env.LOG_CHANNEL!);
