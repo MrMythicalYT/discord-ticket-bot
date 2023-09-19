@@ -8,6 +8,7 @@ import {
   Message,
   escapeMarkdown,
 } from "discord.js";
+import exclude from "../../exclude.json";
 
 export const event = Events.MessageDelete;
 
@@ -17,7 +18,9 @@ export async function execute(message: Message): Promise<void> {
     (!message.content &&
       !message.embeds &&
       !message.attachments &&
-      !message.stickers)
+      !message.stickers) ||
+    exclude.delete.includes(message.channel.id) ||
+    exclude.all.includes(message.channel.id)
   )
     return;
   const channel = message.client.channels.cache.get(process.env.LOG_CHANNEL!);

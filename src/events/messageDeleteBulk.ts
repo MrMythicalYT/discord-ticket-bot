@@ -8,10 +8,15 @@ import {
   Message,
   Snowflake,
 } from "discord.js";
+import exclude from "../../exclude.json";
 
 export const event = Events.MessageBulkDelete;
 export function execute(messages: Collection<Snowflake, Message>) {
-  if (!messages.first()) return;
+  if (
+    !messages.first() ||
+    exclude.deleteBulk.includes(messages.first()!.channel.id) ||
+    exclude.all.includes(messages.first()!.channel.id)
+  ) return;
   const infoMessages: string[] = [];
   for (const message of messages.values()) {
     if (message.content)
