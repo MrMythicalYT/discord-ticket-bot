@@ -6,6 +6,7 @@ import {
   Events,
   Message,
 } from "discord.js";
+import exclude from "../../exclude.json";
 
 export const event = Events.MessageUpdate;
 
@@ -18,7 +19,9 @@ export async function execute(
     (!oldMessage.content &&
       !oldMessage.embeds &&
       !oldMessage.attachments &&
-      !oldMessage.stickers)
+      !oldMessage.stickers) || 
+    exclude.update.includes(newMessage.channel.id) ||
+    exclude.all.includes(newMessage.channel.id)
   )
     return;
   if (oldMessage.content === newMessage.content) return;
